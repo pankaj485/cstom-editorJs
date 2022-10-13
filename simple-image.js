@@ -11,7 +11,8 @@ class SimpleImage {
 	}
 
 	render() {
-		const wrapper = document.createElement("div");
+		const container = document.createElement("div");
+		const imageInputWrapper = document.createElement("div");
 		const input = document.createElement("input");
 		const customizationContainer = document.createElement("div");
 		const heightInput = document.createElement("input");
@@ -21,9 +22,9 @@ class SimpleImage {
 		customizationContainer.appendChild(heightInput);
 		customizationContainer.appendChild(widthInput);
 
-		wrapper.classList.add("simple-image");
-		wrapper.appendChild(input);
-		wrapper.appendChild(customizationContainer);
+		imageInputWrapper.classList.add("simple-image");
+		imageInputWrapper.appendChild(input);
+		imageInputWrapper.appendChild(customizationContainer);
 
 		input.placeholder = "Paste an image URL...";
 		input.value = this.data && this.data.url ? this.data.url : "";
@@ -36,18 +37,61 @@ class SimpleImage {
 		widthInput.placeholder = "Width";
 		widthInput.value = this.data && this.data.width ? this.data.width : "";
 
-		return wrapper;
+		// ==============================
+		// create layout container
+		// ==============================
+		let row = 3;
+		let col = 3;
+
+		const positionContainer = document.createElement("div");
+		positionContainer.classList.add("positionContainer");
+
+		// create rows
+		for (let currentRow = 1; currentRow <= Number(row); currentRow++) {
+			const rowElement = document.createElement("div");
+			rowElement.classList.add(`row-${currentRow}`);
+			positionContainer.appendChild(rowElement);
+			// create columns
+			for (let currentCol = 1; currentCol <= Number(col); currentCol++) {
+				const colElement = document.createElement("div");
+				colElement.classList.add("positionElement");
+				colElement.setAttribute(
+					"position",
+					`row-${currentRow}-col-${currentCol}`
+				);
+				rowElement.appendChild(colElement);
+			}
+		}
+
+		container.classList.add("container");
+		container.appendChild(imageInputWrapper);
+		container.appendChild(positionContainer);
+
+		return container;
 	}
 
 	save(blockContent) {
 		const input = blockContent.querySelector("input");
 		const height = blockContent.querySelector(".heightInput");
 		const width = blockContent.querySelector(".widthInput");
+		let position = "";
+
+		const positionElements = document.querySelectorAll(".positionElement");
+
+		positionElements.forEach((positionElement) => {
+			positionElement.addEventListener("click", (e) => {
+				e.preventDefault();
+				position = positionElement.attributes.position.value;
+				alert("position: " + positionElement.attributes.position.value);
+				positionElement.style.backgroundColor = "red";
+			});
+		});
 
 		return {
 			url: input.value,
 			height: height.value,
 			width: width.value,
+			position: position,
 		};
 	}
 }
