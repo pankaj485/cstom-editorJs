@@ -2,7 +2,7 @@ class SimpleImage {
 	static get toolbox() {
 		return {
 			title: "Pank Image",
-			icon: '<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 290.99 290.99" style="enable-background:new 0 0 290.99 290.99;" xml:space="preserve"> <g> <path style="fill:#010002;" d="M280.112,30.82H10.878C4.868,30.82,0,35.694,0,41.699v207.593c0,6.005,4.868,10.878,10.878,10.878 h269.234c6.005,0,10.878-4.873,10.878-10.878V41.699C290.99,35.694,286.117,30.82,280.112,30.82z M266.52,219.828	c0,6.005-4.873,10.878-10.878,10.878H58.018c-6.01,0-10.878-4.873-10.878-10.878V71.162c0-6.005,4.868-10.878,10.878-10.878 h197.623c6.005,0,10.878,4.873,10.878,10.878V219.828z"/> <path style="fill:#010002;" d="M73.427,216.434h164.08c6.005,0,9.616-4.699,8.044-10.508l-26.069-96.837	c-1.566-5.803-4.15-9.388-5.776-8.012s-4.569,7.082-6.57,12.749l-21.299,60.183c-2.002,5.668-6.451,6.288-9.932,1.392	l-18.667-26.254c-3.486-4.895-9.23-4.971-12.842-0.169l-20.01,26.597c-3.612,4.803-10.155,5.434-14.62,1.414l-6.494-5.852	c-4.465-4.019-10.655-3.144-13.821,1.958l-21.163,34.098C65.122,212.295,67.417,216.434,73.427,216.434z"/> <circle style="fill:#010002;" cx="114.215" cy="117.622" r="15.409"/> </g> </svg>',
+			icon: '<svg width="17" height="15" viewBox="0 0 336 276" xmlns="http://www.w3.org/2000/svg"><path fill="#7D58E6" d="M291 150V79c0-19-15-34-34-34H79c-19 0-34 15-34 34v42l67-44 81 72 56-29 42 30zm0 52l-43-30-56 30-81-67-66 39v23c0 19 15 34 34 34h178c17 0 31-13 34-29zM79 0h178c44 0 79 35 79 79v118c0 44-35 79-79 79H79c-44 0-79-35-79-79V79C0 35 35 0 79 0z"/></svg>',
 		};
 	}
 
@@ -11,15 +11,43 @@ class SimpleImage {
 	}
 
 	render() {
+		const wrapper = document.createElement("div");
 		const input = document.createElement("input");
+		const customizationContainer = document.createElement("div");
+		const heightInput = document.createElement("input");
+		const widthInput = document.createElement("input");
+
+		customizationContainer.classList.add("customizationContainer");
+		customizationContainer.appendChild(heightInput);
+		customizationContainer.appendChild(widthInput);
+
+		wrapper.classList.add("simple-image");
+		wrapper.appendChild(input);
+		wrapper.appendChild(customizationContainer);
+
+		input.placeholder = "Paste an image URL...";
 		input.value = this.data && this.data.url ? this.data.url : "";
-		return input;
+
+		heightInput.classList.add("heightInput");
+		heightInput.placeholder = "Height";
+		heightInput.value = this.data && this.data.height ? this.data.height : "";
+
+		widthInput.classList.add("widthInput");
+		widthInput.placeholder = "Width";
+		widthInput.value = this.data && this.data.width ? this.data.width : "";
+
+		return wrapper;
 	}
 
 	save(blockContent) {
+		const input = blockContent.querySelector("input");
+		const height = blockContent.querySelector(".heightInput");
+		const width = blockContent.querySelector(".widthInput");
+
 		return {
-			// url: blockContent.value
-			url: "https://images.unsplash.com/photo-1665517576012-344e2e70143a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+			url: input.value,
+			height: height.value,
+			width: width.value,
 		};
 	}
 }

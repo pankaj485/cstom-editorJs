@@ -1,0 +1,27 @@
+input {
+	padding: 0.2rem 0.5rem;
+	outline: none;
+	border: 2px solid blueviolet;
+	border-radius: 3px;
+	font-size: inherit;
+}
+
+.simple-image {
+	padding: 0.4rem 0;
+}
+
+.simple-image input {
+	word-break: break-all;
+}
+
+.customizationContainer {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	gap: 1rem;
+	margin-top: 0.5rem;
+}
+
+.customizationContainer input {
+	width: 5rem;
+}
