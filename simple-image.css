@@ -30,6 +30,14 @@ input {
 	width: 5rem;
 }
 
+.selectElement {
+	font-size: inherit;
+	padding: 0.2rem 0.5rem;
+	outline: none;
+	border: 2px solid blueviolet;
+	border-radius: 3px;
+}
+
 .positionContainer {
 	width: fit-content;
 	padding: 0.3rem;
@@ -40,6 +48,8 @@ input {
 	align-items: flex-start;
 	justify-content: flex-start;
 	gap: 3px;
+
+	display: none;
 }
 
 .positionContainer div {

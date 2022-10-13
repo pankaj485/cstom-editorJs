@@ -17,10 +17,11 @@ class SimpleImage {
 		const customizationContainer = document.createElement("div");
 		const heightInput = document.createElement("input");
 		const widthInput = document.createElement("input");
+		const imagePositionDropdown = document.createElement("select");
 
 		customizationContainer.classList.add("customizationContainer");
-		customizationContainer.appendChild(heightInput);
 		customizationContainer.appendChild(widthInput);
+		customizationContainer.appendChild(heightInput);
 
 		imageInputWrapper.classList.add("simple-image");
 		imageInputWrapper.appendChild(input);
@@ -36,6 +37,38 @@ class SimpleImage {
 		widthInput.classList.add("widthInput");
 		widthInput.placeholder = "Width";
 		widthInput.value = this.data && this.data.width ? this.data.width : "";
+
+		// ==============================
+		// create position dropdown
+		// ==============================
+		const options = ["left", "right", "top", "bottom"];
+
+		const selectElement = document.createElement("select");
+		selectElement.classList.add("selectElement");
+
+		// create placeholder option
+		const placeholderOption = document.createElement("option");
+		placeholderOption.disabled = true;
+		placeholderOption.selected = true;
+		placeholderOption.textContent = "Position";
+		selectElement.appendChild(placeholderOption);
+
+		// create options dynamically based on options array
+		for (
+			let currentOption = 0;
+			currentOption < options.length;
+			currentOption++
+		) {
+			const optionElement = document.createElement("option");
+
+			optionElement.textContent = options[currentOption];
+			optionElement.classList.add("imagePositionOption");
+			optionElement.classList.add(options[currentOption]);
+
+			selectElement.appendChild(optionElement);
+		}
+
+		customizationContainer.appendChild(selectElement);
 
 		// ==============================
 		// create layout container
@@ -74,7 +107,7 @@ class SimpleImage {
 		const input = blockContent.querySelector("input");
 		const height = blockContent.querySelector(".heightInput");
 		const width = blockContent.querySelector(".widthInput");
-		let position = "";
+		let selectElement = blockContent.querySelector(".selectElement");
 
 		const positionElements = document.querySelectorAll(".positionElement");
 
@@ -91,7 +124,7 @@ class SimpleImage {
 			url: input.value,
 			height: height.value,
 			width: width.value,
-			position: position,
+			position: selectElement.options[selectElement.selectedIndex].text,
 		};
 	}
 }
