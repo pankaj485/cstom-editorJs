@@ -4,26 +4,27 @@
 	box-sizing: border-box;
 }
 
-input {
+input,
+button {
 	padding: 0.2rem 0.5rem;
 	outline: none;
 	border: 2px solid blueviolet;
 	border-radius: 3px;
 	font-size: inherit;
+	width: fit-content;
 }
 
 .simple-image {
 	display: flex;
 	flex-direction: column;
-	gap: 0.5rem;
 }
 
 .customizationContainer {
+	margin: 0.5rem 0;
 	display: flex;
 	align-items: center;
 	justify-content: flex-start;
 	gap: 1rem;
-	margin-top: 0.5rem;
 }
 
 .customizationContainer input {
@@ -73,4 +74,10 @@ input {
 	align-items: center;
 	justify-content: space-between;
 	margin: 0.5rem 0;
+}
+
+.outputContainer {
+	width: 100%;
+	padding: 0.5rem;
+	border: 2px solid aliceblue;
 }

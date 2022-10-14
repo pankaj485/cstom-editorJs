@@ -8,6 +8,8 @@ class SimpleImage {
 
 	constructor({ data }) {
 		this.data = data;
+		this.imageInputWrapper = undefined;
+		this.container = undefined;
 	}
 
 	render() {
@@ -100,31 +102,65 @@ class SimpleImage {
 		container.appendChild(imageInputWrapper);
 		container.appendChild(positionContainer);
 
+		const getImageButton = document.createElement("button");
+		getImageButton.textContent = "Get Image";
+		imageInputWrapper.appendChild(getImageButton);
+
+		getImageButton.addEventListener("click", (event) => {
+			const height = heightInput.value;
+			const width = widthInput.value;
+			const imageUrl = input.value;
+
+			this._createImage(imageUrl, width, height);
+		});
+
+		this.container = container;
+		this.imageInputWrapper = imageInputWrapper;
+
 		return container;
+	}
+
+	_createImage(url, width, height) {
+		console.log(url);
+
+		const image = document.createElement("img");
+		const caption = document.createElement("input");
+		const outputContainer = document.createElement("div");
+
+		outputContainer.classList.add("outputContainer");
+		outputContainer.style.marginTop = "1rem";
+
+		image.src = url;
+		image.classList.add("outputImage");
+		image.style.width = width;
+		image.style.height = height;
+
+		caption.placeholder = "Caption...";
+		caption.classList.add("outputImageCaption");
+		caption.style.marginBottom = "0.5rem";
+		caption.style.width = "100%";
+
+		outputContainer.appendChild(caption);
+		outputContainer.appendChild(image);
+		this.imageInputWrapper.appendChild(outputContainer);
+
+		// this.imageInputWrapper.appendChild(caption);
+		// this.imageInputWrapper.appendChild(image);
 	}
 
 	save(blockContent) {
 		const input = blockContent.querySelector("input");
 		const height = blockContent.querySelector(".heightInput");
 		const width = blockContent.querySelector(".widthInput");
+		const imageCaption = blockContent.querySelector(".outputImageCaption");
 		let selectElement = blockContent.querySelector(".selectElement");
-
-		const positionElements = document.querySelectorAll(".positionElement");
-
-		positionElements.forEach((positionElement) => {
-			positionElement.addEventListener("click", (e) => {
-				e.preventDefault();
-				position = positionElement.attributes.position.value;
-				alert("position: " + positionElement.attributes.position.value);
-				positionElement.style.backgroundColor = "red";
-			});
-		});
 
 		return {
 			url: input.value,
 			height: height.value,
 			width: width.value,
 			position: selectElement.options[selectElement.selectedIndex].text,
+			imageCaption: imageCaption.value,
 		};
 	}
 }
