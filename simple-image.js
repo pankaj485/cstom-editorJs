@@ -15,24 +15,34 @@ class SimpleImage {
 	render() {
 		const container = document.createElement("div");
 		const imageInputWrapper = document.createElement("div");
+		const imageInputContainer = document.createElement("div");
 		const input = document.createElement("input");
+		const imageCaption = document.createElement("input");
 		const customizationContainer = document.createElement("div");
 		const heightInput = document.createElement("input");
 		const widthInput = document.createElement("input");
-		const imagePositionDropdown = document.createElement("select");
+
+		imageInputContainer.classList.add("imageInputContainer");
+		imageInputContainer.appendChild(input);
+		imageInputContainer.appendChild(imageCaption);
 
 		customizationContainer.classList.add("customizationContainer");
 		customizationContainer.appendChild(widthInput);
 		customizationContainer.appendChild(heightInput);
 
 		imageInputWrapper.classList.add("simple-image");
-		imageInputWrapper.appendChild(input);
+		imageInputWrapper.appendChild(imageInputContainer);
 		imageInputWrapper.appendChild(customizationContainer);
 
 		input.placeholder = "Paste an image URL...";
 		input.value = this.data && this.data.url ? this.data.url : "";
 
-		heightInput.classList.add("heightInput");
+		imageCaption.placeholder = "Caption...";
+		imageCaption.classList.add("outputImageCaption");
+
+		(imageCaption.value =
+			this.data && this.data.imageCaption ? this.data.imageCaption : ""),
+			heightInput.classList.add("heightInput");
 		heightInput.placeholder = "Height";
 		heightInput.value = this.data && this.data.height ? this.data.height : "";
 
@@ -124,7 +134,6 @@ class SimpleImage {
 		console.log(url);
 
 		const image = document.createElement("img");
-		const caption = document.createElement("input");
 		const outputContainer = document.createElement("div");
 
 		outputContainer.classList.add("outputContainer");
@@ -135,17 +144,8 @@ class SimpleImage {
 		image.style.width = width;
 		image.style.height = height;
 
-		caption.placeholder = "Caption...";
-		caption.classList.add("outputImageCaption");
-		caption.style.marginBottom = "0.5rem";
-		caption.style.width = "100%";
-
-		outputContainer.appendChild(caption);
 		outputContainer.appendChild(image);
 		this.imageInputWrapper.appendChild(outputContainer);
-
-		// this.imageInputWrapper.appendChild(caption);
-		// this.imageInputWrapper.appendChild(image);
 	}
 
 	save(blockContent) {
